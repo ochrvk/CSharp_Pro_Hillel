@@ -4,28 +4,35 @@
     Наприклад: строка = "Лондон, Париж, Рим", а символ = ','. Результат = string[] { "Лондон", "Париж", "Рим" }.
 */
 
-
 Console.Write("Type symbol here: ");
 char symbol = Convert.ToChar(Console.ReadLine());
 
 Console.Write("Type line here: ");
 string line = Console.ReadLine();
 
-string[] lines = line.Replace(" ", "").Split(symbol);
+List<string> lines = new List<string>();
 
-
-int i = 0;
-Console.Write("{");
-foreach (string l in lines)
+int startIndex = 0;
+for (int i = 0; i < line.Length; i++)
 {
-    i++;
-    if (i == lines.Length)
+    if (line[i] == symbol)
     {
-        Console.Write($"\"{l}\"");
+        lines.Add(line.Substring(startIndex, i - startIndex));
+        startIndex = i + 1;
+    }
+}
+lines.Add(line.Substring(startIndex));
+
+Console.Write("{");
+for (int j = 0; j < lines.Count; j++)
+{
+    if (j == lines.Count - 1)
+    {
+        Console.Write($"\"{lines.ElementAt(j)}\"");
     }
     else
     {
-        Console.Write($"\"{l}\",");
+        Console.Write($"\"{lines.ElementAt(j)}\",");
     }
 }
 Console.Write("}");
